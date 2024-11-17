@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-abstract class juguetes_clases {
+abstract class juguete {
 
 	public abstract int costo() ;
 	public int precio() {
@@ -21,7 +21,7 @@ abstract class juguetes_clases {
 	
 }
 
-class pelota extends juguetes_clases {
+class pelota extends juguete {
 		
 		public int radio;
 		
@@ -42,7 +42,7 @@ class pelota extends juguetes_clases {
 	
 }
 
-class balde extends juguetes_clases {
+class balde extends juguete {
 	
 	ArrayList<cuerpoGeo> partes = new ArrayList<cuerpoGeo>();
 	
