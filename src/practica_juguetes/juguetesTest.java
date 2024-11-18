@@ -1,6 +1,9 @@
 package practica_juguetes;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
@@ -73,13 +76,51 @@ class juguetesTest {
 	@Test 
 	void entretenimientoNiños() {
 		assertEquals(13.2, valentin.entretenimiento(pelota));
-		assertEquals(21.6, zoe.entretenimiento(pelota));
-		
-		System.out.println(milena.edad());
-		System.out.println(milena.entretenimiento(pelota));
-		System.out.println(milena.coeficiente());
-		
+		assertEquals(21.6, zoe.entretenimiento(pelota));	
 		assertEquals(6.9, milena.entretenimiento(pelota));
+	}
+	
+	@Test
+	void comprarJuguetes_Tipico() {
+		try {
+			valentin.comprar(pelota);
+			valentin.comprar(tachito);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		ArrayList<juguete> juguetes = new ArrayList<juguete>();
+		juguetes.add(pelota);
+		juguetes.add(tachito);
+		
+		
+		assertTrue(juguetes.equals(valentin.juguetes()));
+	}
+	
+	
+	@Test
+	void comprarJuguetes_Curioso() throws Exception {
+
+			zoe.comprar(pelota);
+			assertThrows(Exception.class, () -> zoe.comprar(tachito));
+		
+		ArrayList<juguete> juguetes = new ArrayList<juguete>();
+		juguetes.add(pelota);
+		
+		assertTrue(juguetes.equals(zoe.juguetes()));
+	}
+	
+	@Test
+	void comprarJuguetes_Revoltoso() throws Exception {
+
+		assertThrows(Exception.class, () -> milena.comprar(pelota));
+		milena.comprar(tachito);
+		
+		ArrayList<juguete> juguetes = new ArrayList<juguete>();
+		juguetes.add(tachito);
+		
+		assertTrue(juguetes.equals(milena.juguetes()));
 	}
 
 }
+
