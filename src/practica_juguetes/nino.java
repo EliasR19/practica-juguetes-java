@@ -4,6 +4,8 @@ package practica_juguetes;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class nino {
 	double edad; //en meses
@@ -28,17 +30,53 @@ public class nino {
 		return edad;
 	}
 	
+	public Tipo tipo() {
+		return tipo;
+	}
+	
 	public ArrayList<juguete> juguetes() {
 		return juguetes;
 	}
 	
 	public void comprar(juguete juguete) throws Exception {
-		this.validarCompraSegunTipo(this, juguete);
-		juguetes.add(juguete);
+		this.validarComprar(juguete);
+		this.agregarJuguete(juguete);
 	}
 	
-	public void validarCompraSegunTipo(nino niño, juguete juguete) throws Exception {
-			tipo.validarJuguete(niño, juguete);
+	public void validarComprar(juguete juguete) throws Exception {
+		if(!tipo.puedeComprar(this, juguete)){
+			throw new  Exception("No se puede comprar juguete");
+		}
+	}
+	
+	
+	
+	
+	public void donar(nino niño) throws Exception{
+		this.validarDonar(niño);
+		juguetesQuePuedeDonarA(niño).forEach(j -> niño.agregarJuguete(j));
+		juguetesQuePuedeDonarA(niño).forEach(j -> juguetes.remove(j));
+
+	}
+	
+	public ArrayList<juguete> juguetesQuePuedeDonarA(nino niño) {
+				List<juguete> copy = juguetes.stream()
+				.filter(j -> niño.tipo().puedeComprar(niño, j))
+				.collect(Collectors.toList());
+				ArrayList<juguete> juguetes2 = new ArrayList<juguete>(copy);
+			return juguetes2;
+				
+	}
+	
+	public void validarDonar(nino niño) throws Exception {
+		if(!juguetes.stream().anyMatch(j -> niño.tipo().puedeComprar(niño, j))) {
+			throw new  Exception("No se puede donar a "+ niño);
+		}
+	}
+	
+	//TEST AGREGAR JUGUETES
+	public void agregarJuguete(juguete j ) {
+		juguetes.add(j);
 	}
 		
 }	
@@ -51,14 +89,14 @@ abstract class Tipo {
 		return roundEntret.doubleValue();
 	}
 	
-	public abstract void validarJuguete(nino niño, juguete juguete) throws Exception;
+	public abstract boolean puedeComprar(nino niño, juguete juguete);
 
 	
 }
 
 class Tipico extends Tipo {
-	public void validarJuguete(nino niño, juguete juguete) {
-		
+	public boolean puedeComprar(nino niño, juguete juguete) {
+		return true;
 	}
 }
 
@@ -67,11 +105,10 @@ class Curioso extends Tipo {
 		return super.entretenimiento(niño, jugueteMano) * 1.5f;
 	}
 	
-	public void validarJuguete(nino niño, juguete juguete) throws Exception{
-		if(juguete.precio() > 150 ) {
-			throw new  Exception("Curioso no puede comprar " + juguete);
+	public boolean puedeComprar(nino niño, juguete juguete){
+		return juguete.precio() < 150 ;
 	}
-}
+
 }
 
 class Revoltoso extends Tipo {
@@ -79,12 +116,11 @@ class Revoltoso extends Tipo {
 		return super.entretenimiento(niño, jugueteMano) / 2 ;
 	}
 	
-	public void validarJuguete(nino niño,juguete juguete) throws Exception{
-		if(niño.entretenimiento(juguete) <= 7) {
-			throw new  Exception("Para Revoltoso el juguete es aburrido");
-		}
+	public boolean puedeComprar(nino niño,juguete juguete){
+		return niño.entretenimiento(juguete) > 7;
+		
 	}
-	}	
+}	
 
 	
 

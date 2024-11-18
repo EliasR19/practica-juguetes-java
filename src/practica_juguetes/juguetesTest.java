@@ -121,6 +121,51 @@ class juguetesTest {
 		
 		assertTrue(juguetes.equals(milena.juguetes()));
 	}
+	
+	@Test
+	void puedeDonar() throws Exception {
+		valentin.agregarJuguete(balde);
+		valentin.agregarJuguete(pelota);
+		valentin.agregarJuguete(tachito);
+		
+		valentin.donar(milena);
+		
+		ArrayList<juguete> juguetesM = new ArrayList<juguete>();
+		juguetesM.add(tachito);
+		
+		assertTrue(juguetesM.equals(milena.juguetes()));
+		
+		ArrayList<juguete> juguetesV = new ArrayList<juguete>();
+		juguetesV.add(balde);
+		juguetesV.add(pelota);
+		
+		assertTrue(juguetesV.equals(valentin.juguetes()));
+	}
+	
+	@Test
+	void noPuedeDonar() throws Exception {
+		zoe.agregarJuguete(balde);
+		zoe.agregarJuguete(pelota);
+
+		assertThrows(Exception.class, () -> zoe.donar(milena));
+
+		
+		ArrayList<juguete> juguetes = new ArrayList<juguete>();
+		juguetes.add(balde);
+		juguetes.add(pelota);
+		
+		
+		ArrayList<juguete> juguetesM = new ArrayList<juguete>();
+
+		
+		assertTrue(juguetes.equals(zoe.juguetes()));
+		assertTrue(juguetesM.equals(milena.juguetes()));
+	}
+		
+		
+		
+		
+
 
 }
 

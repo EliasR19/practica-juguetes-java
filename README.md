@@ -172,28 +172,6 @@ Ejemplos:
 no tiene ningún juguete que sea aceptado
 
 
-# TEST 
-
-
-		
-- const baldecito = //TODO: Construir/configurar un baldecito de cuerpos geometricos que tenga 
-	               // un cubo de volumen  4 azul y un cilindro de volumen 3 rosa 	
-- const pelota = //TODO: Construir/configurar una Pelota de radio 4
-- const tachitos = //TODO: Construir un juego de tachitos apilables con 3 tachitos de volumen 6,5 y 4 respectivamente. todos azules.
-		
-- const valentin = //TODO: construir un niño típico de 10 meses de edad 
-- const zoe = //TODO: construir una niño curiosa de 20 meses de edad 
-- const milena = //TODO: construir una niña revoltosa de 15 meses de edad
-
-- // TODO: configurar el cuv con un valor de 2
-		
-
-test "costo de un juguete" {
-//TODO: verificar que el costo de la pelota es 24
-//TODO: verificiar que el costo del baldecito es 21
-//TODO verificar qeu el costo de los tachitos es 39
-
- 
 
 
 
